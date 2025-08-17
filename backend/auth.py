@@ -71,10 +71,15 @@ class AuthHandler:
         # Hash password
         user_data["password"] = self.hash_password(user_data["password"])
         
-        # Create user
-        result = await self.db.users.insert_one(user_data)
+        # Create user object to generate ID
+        from models import User
+        user_obj = User(**user_data)
+        user_dict = user_obj.dict()
+        
+        # Create user in database
+        result = await self.db.users.insert_one(user_dict)
         if result.inserted_id:
-            return await self.get_user_by_id(user_data["id"])
+            return await self.get_user_by_id(user_obj.id)
         return None
     
     async def authenticate_user(self, email: str, password: str):
