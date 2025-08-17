@@ -112,9 +112,18 @@ async def register_user(user_data: UserCreate, database = Depends(get_db)):
     )
 
 @api_router.post("/auth/login", response_model=Token)
-async def login_user(email: str, password: str, database = Depends(get_db)):
+async def login_user(credentials: dict, database = Depends(get_db)):
     """Login user"""
     auth_handler = AuthHandler(database)
+    
+    email = credentials.get('email')
+    password = credentials.get('password')
+    
+    if not email or not password:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Email and password are required"
+        )
     
     user = await auth_handler.authenticate_user(email, password)
     if not user:
