@@ -38,10 +38,14 @@ const Lessons = () => {
     let filtered = lessons;
 
     // Search filter
-    if (searchTerm) {
+    if (searchTerm.trim()) {
+      const search = searchTerm.toLowerCase().trim();
       filtered = filtered.filter(lesson =>
-        lesson.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        lesson.description?.toLowerCase().includes(searchTerm.toLowerCase())
+        lesson.title.toLowerCase().includes(search) ||
+        lesson.description?.toLowerCase().includes(search) ||
+        (lesson.key_concepts && lesson.key_concepts.some(concept => 
+          concept.toLowerCase().includes(search)
+        ))
       );
     }
 
