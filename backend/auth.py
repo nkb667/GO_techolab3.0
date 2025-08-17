@@ -87,8 +87,11 @@ class AuthHandler:
         if not user:
             return None
         
-        # Get password from database
+        # Get password from database (since User model doesn't include password field)
         user_doc = await self.db.users.find_one({"email": email})
+        if not user_doc or "password" not in user_doc:
+            return None
+            
         if not self.verify_password(password, user_doc["password"]):
             return None
         
