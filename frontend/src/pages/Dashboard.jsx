@@ -197,7 +197,9 @@ const Dashboard = () => {
                       >
                         {lesson.difficulty}
                       </Badge>
-                      <Button size="sm">Continue</Button>
+                      <Link to={`/lessons/${lesson.id}`}>
+                        <Button size="sm">Continue</Button>
+                      </Link>
                     </div>
                   </div>
                 ))}
