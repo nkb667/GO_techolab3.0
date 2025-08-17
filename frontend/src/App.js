@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Lessons from "./pages/Lessons";
+import LessonView from "./pages/LessonView";
 
 function App() {
   return (
@@ -36,6 +37,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Lessons />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/lessons/:lessonId" 
+              element={
+                <ProtectedRoute>
+                  <LessonView />
                 </ProtectedRoute>
               } 
             />
